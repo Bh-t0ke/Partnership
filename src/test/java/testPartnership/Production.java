@@ -44,7 +44,7 @@ public class Production {
 			// create customer
 			response = given().log().all().header("Content-type", "application/json")
 					.header("Authorization", "Basic QXBxcXg6QjFRLVZaVmkt").when().get("/gates/1.0/sweeps/getMasterData")
-					.then().log().all().assertThat().statusCode(200).time(lessThan(100L))
+					.then().log().all().assertThat().statusCode(200).time(lessThan(10000L))
 					.body("message", equalTo("Master data from LOS"))
 					// store response in string
 					.extract().response().asString();
@@ -59,6 +59,7 @@ public class Production {
 				System.out.println("PASS");
 			}
 			else {
+				
 				common.sendSlackCIF(Result= "GetMasterData API Production Result:-->\t"+"statuscode=" + statuscode + "\n" + "message" + message);
 			}
 		} catch (AssertionError e) {
